@@ -3,7 +3,7 @@ const { fork } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const program = require('commander');
-
+const { getOutPath } = require('../lib/util')
 program
     .version('1.0.0')
     .option('build')  //myvuessr build 启动生产构建//TODO: 参数会被带到webpack-cli 一定要先清掉再传给webpack
@@ -14,14 +14,13 @@ program
     .parse(process.argv);
 
 
-let DIST_DIR = path.resolve('./lib/dist')
+let DIST_DIR = getOutPath('dist')
 //生产构建
 if (program.build) {
     try {
         fs.accessSync(DIST_DIR, fs.constants.R_OK | fs.constants.W_OK);
         fs.rmSync(DIST_DIR, { recursive: true })
     } catch (err) {
-        console.log("file: myVueSSR.js ~ line 26 ~ err", err)
     }
     //无需设置argv 子进程是新的干净的程序
     // process.argv.splice(2)

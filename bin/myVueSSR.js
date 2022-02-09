@@ -25,8 +25,8 @@ if (program.build) {
         //执行打包
         //无需设置argv 子进程是新的干净的程序
         // process.argv.splice(2)
-        const serverChild = fork('./children/serverChild.js')
-        const clientChild = fork('./children/clientChild.js')
+        const serverChild = fork(path.resolve(__dirname, '../children/serverChild.js'))
+        const clientChild = fork(path.resolve(__dirname, '../children/clientChild.js'))
     }, error => {
         console.log(error)
     })
